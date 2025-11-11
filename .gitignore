@@ -1,0 +1,85 @@
+# Sistema operativo
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Archivos temporales generales
+*.log
+*.tmp
+*.swp
+*.swo
+*~
+nohup.out
+
+# Python/cache
+__pycache__/
+*.pyc
+
+# Node / frontend
+node_modules/
+yarn.lock
+package-lock.json
+
+# PlatformIO / firmware
+.platformio/
+.pio/
+.pioenvs/
+.piolibdeps/
+.ccls-cache/
+.vscode/
+*.elf
+*.map
+
+# KiCad / hardware
+*.bak
+*.kicad_prl
+*.kicad_sch-bak
+*.kicad_pcb-bak
+*-cache.lib
+*-rescue*
+*.net
+*.xml
+*.dcm
+*.pro
+*.sch-bak
+*.kicad_pcb-bak
+plot/
+
+gerbers/
+ensamble/
+
+# CAD / impresión 3D
+*.stl
+*.step
+*.iges
+*.obj
+
+# Datos pesados / resultados
+*.csv
+*.xlsx
+*.xls
+*.h5
+*.nc
+raw/
+outputs/
+
+# Documentos intermedios
+*.aux
+*.toc
+*.out
+*.lof
+*.lot
+*.gz
+*.zip
+*.tar
+*.tar.gz
+
+# Imágenes generadas
+img/*.png
+img/*.jpg
+img/*.pdf
+
+# Configuración local
+.env
+.env.*
+*.local
