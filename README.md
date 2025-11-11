@@ -28,6 +28,24 @@ La estación integra sensores **electroquímicos**, **ópticos** y **meteorológ
 - Correlación con estaciones de referencia.
 - Evaluación de impactos urbanos o industriales.
 
+## Guía rápida del repositorio
+- `01-requisitos-interesados/`: necesidades y casos de uso basados en el brochure técnico.
+- `02-requisitos-sistema/`: requisitos funcionales/no funcionales y especificaciones (contaminantes, soporte meteo, emergentes).
+- `03-diseño-arquitectura/`: decisiones, vistas de arquitectura y espacio para diagramas.
+- `04-diseño-detallado/`: definición preliminar de hardware, firmware y gestión de datos.
+- `05-implementacion/`: árbol para hardware (PCB, carcasas, componentes), firmware (PlatformIO) y software (backend/frontend/scripts).
+- `06-10/`: integración, verificación, validación, despliegue y operación/mantenimiento.
+- `documentacion/`, `datos/`, `herramientas/`, `configuracion/`: repositorios para datasheets, datasets EPA/WMO, utilidades y perfiles de configuración.
+- `gestion-proyecto/planificacion/roles-responsabilidades.md`: lista actualizada de cargos, incluyendo QA/QC y administración de datos.
+
+## Cómo colaborar (incluye uso con Codex)
+1. Clona este repositorio y revisa el README antes de abrir Codex.
+2. Abre una sesión de Codex desde la raíz (`codex run`), y revisa los archivos en `gestion-proyecto/planificacion/` para conocer roles y tareas pendientes.
+3. Documenta nuevas decisiones en la carpeta correspondiente (por ejemplo, requisitos → `02-...`, hardware → `04-diseño-detallado/...`).
+4. Añade contenidos reales en los documentos vacíos; si no existe información todavía, deja una nota explícita indicando que está pendiente (mantén el estilo usado hasta ahora).
+5. Usa `.gitkeep` para conservar directorios vacíos si agregas nuevos subcontenidos.
+6. Antes de hacer commit, ejecuta `git status` para revisar qué archivos cambiaste y organiza los mensajes de commit por área (requisitos, arquitectura, firmware, etc.).
+
 ## Contacto
 Proyecto en desarrollo: **Estación Multiparamétrica de Monitoreo Ambiental**  \
 Contacto: [luis.gomez@udd.cl](mailto:luis.gomez@udd.cl)
