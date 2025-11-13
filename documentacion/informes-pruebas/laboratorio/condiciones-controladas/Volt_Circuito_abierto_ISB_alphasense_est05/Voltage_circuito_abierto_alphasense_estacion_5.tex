@@ -1,0 +1,326 @@
+%-------------------------------------------------------
+%   REPORTE TÉCNICO – FORMATO MODERNO (PDFLATEX)
+%-------------------------------------------------------
+\documentclass[11pt]{article}
+
+%-------------------------------------------------------
+%   PAQUETES DE DISEÑO COMPATIBLES
+%-------------------------------------------------------
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern} % Fuente moderna compatible
+\usepackage{titlesec}
+\usepackage{microtype}
+\usepackage{setspace}
+\usepackage{paracol}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tcolorbox}
+\usepackage{hyperref}
+\usepackage{multicol}
+\usepackage{siunitx}
+\usepackage{xcolor}
+
+\usepackage{subcaption}
+\usepackage{caption}
+
+%-------------------------------------------------------
+%   COLORES PERSONALIZADOS
+%-------------------------------------------------------
+\definecolor{uddblue}{HTML}{003366}
+\definecolor{graytext}{HTML}{3A3A3A}
+
+%-------------------------------------------------------
+%   ESTILO DE TÍTULOS
+%-------------------------------------------------------
+\titleformat{\section}{\Large\bfseries\color{uddblue}}{}{0em}{}[\titlerule]
+\titleformat{\subsection}{\large\bfseries\color{uddblue}}{}{0em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{uddblue}}{}{0em}{}
+
+% Hipervínculos
+\hypersetup{
+	colorlinks=true,
+	linkcolor=uddblue,
+	urlcolor=uddblue,
+}
+
+% Cuadros modernos
+\tcbset{
+	sharp corners,
+	colback=white,
+	colframe=uddblue,
+	left=8pt,
+	right=8pt,
+	top=6pt,
+	bottom=6pt,
+}
+
+	
+%-------------------------------------------------------
+%   DOCUMENTO
+%-------------------------------------------------------
+\begin{document}
+	
+	%-------------------------------------------------------
+	% PORTADA
+	%-------------------------------------------------------
+	\begin{center}
+		{\huge \bfseries Medición de Offset Electrónico}\\[4pt]
+		{\Large \bfseries (Open Circuit Voltage – OCV)}\\[8pt]
+		\rule{0.9\textwidth}{1pt}\\[10pt]
+	\end{center}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.7\linewidth]{img/IMG_1555}
+	\caption{Placa Alphasense ISB}
+	\label{fig:img1555}
+\end{figure}
+
+
+	
+	\begin{tcolorbox}
+		\textbf{Responsable:} Luis Gómez (\href{mailto:luis.gomez@udd.cl}{luis.gomez@udd.cl})\\
+		\textbf{Lugar:} Laboratorio de Electrónica C+ — UDD, Santiago\\
+		\textbf{Fecha:} 11 noviembre 2025 (10:00–13:52)\\
+		\textbf{Estación evaluada:} Estación 5\\
+		\textbf{Proyecto:} Linea base pública para la región metropolitana
+	\end{tcolorbox}
+	
+	%-------------------------------------------------------
+	\section{Propósito del Test}
+	
+	El objetivo del ensayo fue cuantificar el \textbf{offset electrónico intrínseco} generado por la placa
+	Alphasense ISB cuando opera \textbf{sin sensor conectado} (condición de circuito abierto).  
+	Este voltaje corresponde exclusivamente a la acción de la electrónica interna del módulo 
+	(amplificadores, referencias y filtros) y constituye el valor base que debe restarse a las mediciones reales del sensor para separar:
+	\begin{itemize}
+		\item el offset electrónico (\textbf{WEe}, \textbf{AEe}),
+		\item el offset propio del sensor (\textbf{WEo}, \textbf{AEo}).
+	\end{itemize}
+	
+	Según la documentación técnica de Alphasense, el rango típico esperado para los canales OP1 (WE)
+	y OP2 (Aux) se encuentra entre \textbf{200 y 300 mV} (ver figura).
+	
+	
+	
+\begin{figure}
+	\centering
+	\includegraphics[width=0.4\linewidth]{"img/Conexiones_ISB.png"}
+	\caption{Conexiones ISB Alphasense ISB }
+	\label{fig:captura-de-pantalla-de-2025-11-12-20-29-07}
+\end{figure}
+	%-------------------------------------------------------
+	\pagebreak
+	\section{Procedimiento}
+	
+	\subsection*{Condiciones del ensayo (sin sensor B4)}
+	\begin{itemize}
+		\item Alimentación aplicada: 3.5–6.5 VDC (fuente de bajo ruido).
+		\item Medición de las señales OP1 (WE) y OP2 (Aux).
+		\item Evaluación exclusivamente del offset electrónico en estado de circuito abierto.
+	\end{itemize}
+	
+	\subsection*{Equipamiento}
+	\begin{itemize}
+		\item Power Profile Kit II (fuente de alimentación de bajo ruido).
+		\item Osciloscopio GW Instek GDS-12028.
+		\item Multímetro Keysight 34461A.
+	\end{itemize}
+
+\begin{figure}[h!]
+	\centering
+	
+	\begin{subfigure}[b]{0.32\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{img/fuente.jpg}
+		\caption{Fuente de alimentación}
+		\label{fig:fuente}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.32\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{img/tester.jpg}
+		\caption{Multímetro Keysight}
+		\label{fig:tester}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.32\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{img/osciloscopio.jpg}
+		\caption{Osciloscopio GW Instek}
+		\label{fig:osciloscopio}
+	\end{subfigure}
+	
+	\caption{Equipamiento utilizado en el ensayo: fuente de bajo ruido, multímetro y osciloscopio.}
+	\label{fig:equipamiento}
+\end{figure}
+	
+	\subsection*{Procedimiento medición aplicado a cada placa ISB}
+	\begin{itemize}
+		\item Se extrae el sensor del socket de la placa Alphasense ISB.
+		\item Se conecta el terminal GND de la placa ISB al terminal negativo de la fuente de bajo ruido.
+		\item Se conectan las tierras de los canales 1 y 2 del osciloscopio al GND de la placa.
+		\item Se conectan OP1+ y OP2+ a las puntas de prueba de los canales 1 y 2 del osciloscopio, respectivamente.
+		\item Se enciende la fuente de alimentación.
+		\item Tras un tiempo de estabilización de 1 segundo, se conecta el terminal positivo de la fuente al pin V+ de la ISB.
+		\item Se realizan las mediciones con osciloscopio y multímetro.
+		\item Se apaga la fuente de alimentación y se desconecta la placa.
+	\end{itemize}
+	
+	Este procedimiento se repitió para cinco placas ISB diferentes, identificadas como DBI 01 a DBI 05 mediante etiquetas adhesivas.
+	
+	
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.7\linewidth]{img/conexiones}
+	\caption{Conexiones de la prueba de Offset}
+	\label{fig:conexiones}
+\end{figure}
+	
+	%-------------------------------------------------------
+	\newpage
+	\section{Resultados}
+	
+	
+
+	
+	\subsection{Mediciones con multímetro (TESTER)}
+	
+	Resultados obtenidos mediante mediciones con osciloscopio (ver tabla \ref{tab:tester}) 
+	
+\begin{table}[h!]
+	\centering
+	\caption{\textcolor{uddblue}{Valores medidos con multímetro (OP1 y OP2 en condición de circuito abierto).}}
+	\label{tab:tester}
+	\vspace{4pt}
+	\begin{tabular}{@{}lccc@{}}
+		\toprule
+		\textbf{DBI} & \textbf{Gas} & \textbf{OP1+ (mV)} & \textbf{OP2+ (mV)} \\
+		\midrule
+		01 & CO     & 352 & 341 \\
+		02 & NO$_2$ & 236 & 237 \\
+		03 & NO     & 273 & 277 \\
+		04 & OX     & 231 & 242 \\
+		05 & SO$_2$ & 354 & 359 \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+
+
+	
+\subsection{Mediciones con osciloscopio}
+
+Resultados obtenidos mediante mediciones con osciloscopio (ver tabla \ref{tab:osciloscopio} y´ figura \ref{fig:medicionosciloscopio}) 
+	
+\begin{table}[h]
+	\centering
+	\caption{Valores de OP1+ y OP2+ medidos con osciloscopio durante la prueba de offset electrónico.}
+	\label{tab:osciloscopio}
+	\begin{tabular}{lccc}
+		\toprule
+		\textbf{DBI} & \textbf{Gas} & \textbf{OP1+ (mV)} & \textbf{OP2+ (mV)} \\
+		\midrule
+		01 & CO     & 375 & 370 \\
+		02 & NO$_2$ & 267 & 272 \\
+		03 & NO     & 312 & 320 \\
+		04 & OX     & 257 & 270 \\
+		05 & SO$_2$ & 384 & 397 \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+	
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.7\linewidth]{img/Medicion_Osciloscopio.jpeg}
+		\caption{salida osciloscopio de una de las pruebas para OP1+ y OP2+}
+		\label{fig:medicionosciloscopio}
+	\end{figure}
+	
+	
+	%-------------------------------------------------------
+\newpage
+	\section{Análisis}
+	
+	Las mediciones obtenidas con multímetro presentan una señal estable y con menor efecto del
+	ruido eléctrico, por lo que representan una mejor estimación del offset electrónico en 
+	estado estacionario.
+	
+	Los valores correspondientes a NO$_2$, NO y OX se encuentran dentro del rango esperado 
+	(200–300 mV). En contraste, las placas asociadas a CO y SO$_2$ presentan offsets superiores, 
+	aunque los valores son estables y coherentes entre OP1 y OP2, indicando un comportamiento 
+	normal de la electrónica del módulo.
+	
+	Las mediciones con osciloscopio son ligeramente mayores debido a:
+	\begin{itemize}
+		\item sensibilidad al ripple de la alimentación,
+		\item captura de transientes breves,
+		\item menor impedancia de entrada en comparación al multímetro.
+	\end{itemize}
+	
+	%-------------------------------------------------------
+	\section{Conclusiones}
+	
+	\begin{itemize}
+		\item Las mediciones realizadas con multímetro se recomiendan para establecer los valores finales de offset electrónico \textbf{WEe} y \textbf{AEe}.
+		\item No se observaron signos de saturación, fallas en amplificadores ni comportamientos anómalos en las placas ISB.
+		\item Los valores caracterizados pueden ser utilizados directamente como parte del proceso de corrección electrónica previo al cálculo de concentración.
+	\end{itemize}
+	
+	%-------------------------------------------------------
+	\section{Recomendaciones}
+	
+	\begin{tcolorbox}
+		\textbf{Para mejorar futuros ensayos, se recomienda:}
+		\begin{itemize}
+			\item añadir capacitores de desacople adicionales en la salida de la ISB para reducir el ruido,
+			\item realizar un muestreo temporal prolongado y calcular la desviación estándar del offset,
+			\item blindar cables de conexión,
+			\item controlar la temperatura de la sala, ya que el offset de la electrónica presenta dependencia térmica.
+		\end{itemize}
+	\end{tcolorbox}
+
+-------------------------------------------------------
+%   Bibliografía
+%-------------------------------------------------------
+
+\begin{thebibliography}{99}
+	
+{\small 	\bibitem{AlphasenseISB}
+	Alphasense Ltd.
+	\textit{4-Electrode Individual Sensor Board (ISB) User Manual}.
+	Issue 7, Document 085-2217, Great Notley, Essex, UK, 2019.
+	
+	\bibitem{AlphasenseAAN803}
+	Alphasense Ltd.
+	\textit{AAN 803-05: Correcting for Background Currents in Four-Electrode Toxic Gas Sensors}.
+	Application Note, 2019.
+	
+	\bibitem{AlphasenseB4Series}
+	Alphasense Ltd.
+	\textit{B4-Series Toxic Gas Sensors: Specifications}.
+	Sensor Technology House, Great Notley, Essex, UK, 2019.
+	
+	\bibitem{Keysight34461A}
+	Keysight Technologies.
+	\textit{Keysight 34461A Truevolt 6½ Digit Multimeter – User’s Guide}.
+	2020.
+	
+	\bibitem{GWInstekGDS12000}
+	GW Instek.
+	\textit{GDS-12000 Series Digital Oscilloscopes – User Manual}.
+	2021.
+	
+	\bibitem{NordicPPK2}
+	Nordic Semiconductor.
+	\textit{Power Profiler Kit II – User Guide}.
+	2023.}
+	
+\end{thebibliography}
+	
+\end{document}
+
+	
+
+
