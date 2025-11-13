@@ -81,6 +81,7 @@
 	
 	\begin{tcolorbox}
 		\textbf{Responsable:} Luis Gómez (\href{mailto:luis.gomez@udd.cl}{luis.gomez@udd.cl})\\
+		\textbf{Revisores:} Alejandro Rebolledo (\href{mailto:arebolledo@udd.cl}{arebolledo@udd.cl})\\ % me agrego como revisor
 		\textbf{Lugar:} Laboratorio de Electrónica C+ — UDD, Santiago\\
 		\textbf{Fecha:} 11 noviembre 2025 (10:00–13:52)\\
 		\textbf{Estación evaluada:} Estación 5\\
@@ -158,7 +159,8 @@
 	
 	\subsection*{Procedimiento medición aplicado a cada placa ISB}
 	\begin{itemize}
-		\item Se extrae el sensor del socket de la placa Alphasense ISB.
+		\item Se extrae el sensor del socket de la placa Alphasense ISB.% aclarar que esto no es recomendable en operación normal
+		\item Se conectan los cables según diagrama de la figura \ref{fig:conexiones}.%agregar figura de conexiones y agregar esquematicos
 		\item Se conecta el terminal GND de la placa ISB al terminal negativo de la fuente de bajo ruido.
 		\item Se conectan las tierras de los canales 1 y 2 del osciloscopio al GND de la placa.
 		\item Se conectan OP1+ y OP2+ a las puntas de prueba de los canales 1 y 2 del osciloscopio, respectivamente.
@@ -278,6 +280,9 @@ Resultados obtenidos mediante mediciones con osciloscopio (ver tabla \ref{tab:os
 			\item realizar un muestreo temporal prolongado y calcular la desviación estándar del offset,
 			\item blindar cables de conexión,
 			\item controlar la temperatura de la sala, ya que el offset de la electrónica presenta dependencia térmica.
+			\item Medir con sensor conectado y sin gas para comparar el offset electrónico con el offset total (electrónico + sensor).%argrego recomendaciones
+			\item Realizar mediciones de corriente, con y sin sensor, para evaluar el consumo en estado de circuito abierto. %argrego recomendaciones
+			\item Armar pares de placa y sensor y no separarlos.
 		\end{itemize}
 	\end{tcolorbox}
 
