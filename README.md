@@ -72,3 +72,23 @@ La estación integra sensores **electroquímicos**, **ópticos** y **meteorológ
 ## Contacto
 Proyecto en desarrollo: **Estación Multiparamétrica de Monitoreo Ambiental**  \
 Contacto: [luis.gomez@udd.cl](mailto:luis.gomez@udd.cl)
+
+## Descargo de Responsabilidad
+
+El código y la documentación de este proyecto se ofrecen "tal cual", sin garantías de ningún tipo, expresas o implícitas. El uso de este material es bajo su propio riesgo. Los autores no se hacen responsables de ningún daño o pérdida que pueda surgir de su uso.
+
+## Licencia
+
+Este proyecto está licenciado bajo la **Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)**.
+
+![Licencia CC BY-NC 4.0](https://i.creativecommons.org/l/by-nc/4.0/88x31.png)
+
+Usted es libre de:
+-   **Compartir** — copiar y redistribuir el material en cualquier medio o formato.
+-   **Adaptar** — remezclar, transformar y construir sobre el material.
+
+Bajo los siguientes términos:
+-   **Atribución** — Debe dar crédito de manera adecuada, proporcionar un enlace a la licencia, e indicar si se han realizado cambios.
+-   **NoComercial** — No puede utilizar el material para una finalidad comercial.
+
+Para ver una copia de esta licencia, visite [http://creativecommons.org/licenses/by-nc/4.0/](http://creativecommons.org/licenses/by-nc/4.0/) o consulte el archivo [LICENSE](LICENSE) en este repositorio.
