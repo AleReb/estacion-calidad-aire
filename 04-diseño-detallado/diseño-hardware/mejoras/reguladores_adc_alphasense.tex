@@ -1,0 +1,94 @@
+\documentclass[a4paper, 12pt]{article}
+
+% --- PAQUETES BÁSICOS ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel} % Para soporte de idioma español
+\usepackage{amsmath} % Para símbolos matemáticos (ge, mu, le, approx, etc.)
+\usepackage{amssymb} % Para más símbolos
+\usepackage[margin=1in]{geometry} % Para márgenes
+\usepackage{textcomp} % Para I²C
+\usepackage{graphicx} % Para imágenes (aunque no se usan aquí)
+
+% --- PAQUETE DE HIPERVÍNCULOS ---
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue, % Color de los links
+    pdftitle={Reguladores de alto PSRR y ADC de alta resolución para sensores Alphasense},
+    pdfpagemode=FullScreen,
+}
+
+% --- TÍTULO ---
+\title{Reguladores de alto PSRR y ADC de alta resolución para sensores Alphasense}
+\author{} % Ocultar autor
+\date{} % Ocultar fecha
+
+% --- INICIO DEL DOCUMENTO ---
+\begin{document}
+
+\maketitle
+
+Para obtener mediciones precisas con sensores de gas electroquímicos Alphasense (ej. OX-B431, NO2-B43F), es crucial proporcionarles una alimentación muy estable y leer su salida analógica con suficiente resolución.
+
+A continuación se presentan opciones de reguladores lineales de alto rechazo de ruido (PSRR) para filtrar el ruido de la fuente de 5V/12V (proveniente de conversión DC-DC), junto con convertidores ADC de $\ge 12$ bits de resolución, de bajo ruido y con interfaz digital (I²C/SPI) adecuadas para las salidas analógicas de estos sensores.
+
+\section*{Reguladores lineales de alto PSRR y bajo ruido}
+
+Los siguientes reguladores ofrecen alto rechazo de rizado ($>70$dB) en frecuencias medias/altas y baja interferencia, facilitando una alimentación limpia (3.5-6.4 V DC) para las placas acondicionadoras (ISB) de los sensores Alphasense\textsuperscript{1, 2}. Todos son componentes compactos (montaje en PCB) con documentación disponible, y muchos se pueden encontrar en AliExpress u otras tiendas:
+
+\begin{itemize}
+    \item \textbf{Microchip MCP1754/MCP1755} Regulador CMOS LDO de 150 mA, rango de entrada 3.6-16V y salida fija o ajustable hasta 5.5 V. Destaca por PSRR $>70$ dB @1 kHz\textsuperscript{3} y baja corriente quiescente ($\sim 56~\mu$A). Dropout típico de 300 mV @150 mA, con ruido de salida muy bajo. Disponible en encapsulados SOT-23, SOT-223, etc., fácil de integrar\textsuperscript{4}. Precio aprox. $< 1$ USD por unidad.
+
+    \item \textbf{Diodes Inc. AP7387} Nueva familia de LDO 5-60 V in, 150 mA out. Combina PSRR $\sim 70$ dB @1 kHz con ultra bajo consumo (2 $\mu$A)\textsuperscript{5}. Viene en versiones de salida fija comunes (3.3V, 5.0V, etc., $\pm 2\%$ precisión)\textsuperscript{6}. Ideal para alimentar desde baterías de 12V o 24V, minimizando el ruido de conversores previos. Encapsulados SOT23/SOT89 (de 3 a 5 pines), muy compactos y económicos ($\sim 0,3$ USD en volúmenes\textsuperscript{7}).
+
+    \item \textbf{STMicroelectronics LDO40L} LDO automotriz 38 V max in, 400 mA out. Posee PSRR de 70 dB @1 kHz y ruido ultra bajo ($\sim 20~\mu\text{V}_{\text{RMS}}$ referido a Vout)\textsuperscript{8}. Soporta salida fija (3.3V, 5V, etc.) o ajustable hasta 11V, con dropout $\le 140$ mV @400 mA\textsuperscript{9}. Encapsulado DFN6 (3x3 mm). Aunque requiere cuidado de soldado, ofrece alta estabilidad y protección interna (limitación de corriente y térmica)\textsuperscript{8}. Aprox. 1-2 USD.
+
+    \item \textbf{TI TPS7A4700/TPS7A47} - Regulador LDO ultra bajo ruido de Texas Instruments, soporta entrada hasta 36 V, salida 1.4-20V (1 A máx). Ofrece solo $4~\mu\text{V}_{\text{RMS}}$ de ruido en banda 10-100 kHz\textsuperscript{10} y mantiene PSRR alto ($\approx 78$ dB @1 kHz) e incluso $\sim 74$ dB a 1 MHz\textsuperscript{11}. Incluye filtro de ruido (pin NR) para optimizar la limpieza de salida. Viene en QFN-20 o MSOP-8 exponenciado; es un componente profesional (usado en instrumentación de alta precisión y audio)\textsuperscript{12}. Precio ~3-5 USD. Recomendado si se busca máxima filtración de ruido de conmutación.
+
+    \item \textbf{Analog Devices LT3042} - LDO de referencia para aplicaciones RF/análogas sensibles. Entrada 1.8-20 V, salida hasta 15V (200 mA). Presenta PSRR excepcional ($\approx 79$dB @1MHz) y ruido ínfimo ($\sim 0.8~\mu\text{V}_{\text{RMS}}$) gracias a su arquitectura de alta ganancia\textsuperscript{11}. Requiere pocos componentes externos (resistor de programación y capacitores), pero viene en MSOP/DFN de 10 pines. Es viable para lograr una línea de 5 V muy limpia a partir de 12V con carga ligera (los módulos ISB consumen $\sim 1$ mA cada uno\textsuperscript{13, 14}). Su disponibilidad puede ser limitada, pero hay módulos en AliExpress que incorporan el LT3042 listos para usar (orientados a audio Hi-Fi), alrededor de 10-15 USD.
+\end{itemize}
+
+Nota: Se debe evitar el uso de reguladores comunes como LM7805, LM317 o AMS1117 para esta aplicación sin filtros adicionales, ya que su PSRR cae en frecuencias altas, pudiendo dejar pasar ruido de switching. Los reguladores anteriores destacan por mantener un rechazo elevado más allá de la región audible, asegurando que el ruido del convertidor DC-DC (ej. rizado de cientos de kHz) no introduzca variaciones en la señal del sensor. Asimismo, se recomienda agregar capacitores de filtrado de alta frecuencia (cerámicos de 0.1 $\mu$F cerca de la entrada/salida) e incluso filtros $\pi$ o LC si el ruido de la fuente es muy agresivo.
+
+\section*{ADCs de alta resolución y bajo ruido $(I^2C/SPI)$}
+
+Las salidas analógicas de los sensores Alphasense (a través del tablero ISB) son señales de muy baja amplitud y pueden variar solo unos pocos milivoltios o menos según la concentración de gas. Para capturarlas con precisión, se requieren ADC externos de alta resolución ($\ge 12$ bits) y bajo nivel de ruido. A continuación, algunas opciones populares (disponibles como chips o módulos en AliExpress) para leer estas señales, idealmente en configuración diferencial (para restar el electrodo auxiliar) y con interfaz digital sencilla:
+
+\begin{itemize}
+    \item \textbf{Texas Instruments ADS1115} - ADC 16 bits, 4 canales (o 2 diferenciales) con I²C. Es ampliamente utilizado por su facilidad y precisión: proporciona 16-bit efectivos hasta 860 muestras/segundo vía I²C\textsuperscript{15}. Incluye PGA programable (ganancia hasta x16) para amplificar señales débiles y aprovechar todo el rango\textsuperscript{15}. Opera entre 2.0-5.5 V. Es perfecto para estos sensores - de hecho, se emplea en placas comerciales para Alphasense (Smart Citizen Kit) para leer múltiples sensores de gas\textsuperscript{16, 17}. Se consigue como módulo de 4 canales ($\sim 3-5$ USD en marketplaces) o en IC SSOP. Su ruido interno es bajo: a ganancia máxima ($\pm 0.256$ V rango) cada bit $\approx 7.8~\mu$V, logrando 15 bits libres de ruido a baja velocidad\textsuperscript{18, 19}, suficiente para resolver variaciones de pocos ppb en concentración.
+
+    \item \textbf{Microchip MCP3424} Convertidor Delta-Sigma de 18 bits, 4 canales diferencial (I²C). Ofrece resolución seleccionable (12/14/16/18 bits) y velocidades de conversión de 240 SPS (12-bit) hasta 3.75 SPS (18-bit)\textsuperscript{20}. Incluye un PGA de x1-x8 y autocalibración interna de offset/ganancia en cada conversión\textsuperscript{21}, útil para medir señales muy débiles con alta exactitud. Funciona de 2.7-5.5V. Es reconocido como ADC de "bajo ruido y alta precisión" dentro de su familia\textsuperscript{21}. Disponible en módulos breakout (ej. DFRobot Fermion, alrededor de 10-15 USD) y también en versiones de 2 canales (MCP3422) si se requieren menos entradas. Ideal cuando se busca mayor resolución que 16-bit a costo razonable.
+
+    \item \textbf{TI / Waveshare ADS1256} ADC 24 bits, 8 canales (SPI) para quienes necesiten la máxima resolución. Es un ADC sigma-delta de alta precisión con referencia interna de 2.5 V, muy utilizado en placas de adquisición de datos. Soporta hasta 30 kSPS de salida y puede configurarse en 8 entradas sencillas o 4 diferenciales\textsuperscript{22, 23}. A 24 bits puede resolver microvoltios, capturando incluso fluctuaciones muy pequeñas de la señal del sensor. Funciona a 5 V e incluye un regulador de referencia de bajo ruido (ADR03) en las placas comerciales\textsuperscript{24}. Módulos basados en ADS1256 se encuentran en AliExpress/Amazon ($\sim 20$ USD) ya montados, con interfaz SPI lista para conectar a un microcontrolador. Son adecuados si se requiere registrar niveles de ppb con mínima incertidumbre, aunque implican más complejidad de software y consumo.
+
+    \item \textbf{Otras opciones:} Si el presupuesto o la complejidad son factores, existen ADCs más sencillos de 12-16 bits que pueden servir. Por ejemplo, el ADS1015 (hermano menor del ADS1115, 12 bits a 3.3 kSPS, I²C) o los MCP3008/MCP3208 (SAR ADC de 10/12 bits, SPI de 8 canales). No ofrecen el mismo nivel de ruido ultra-bajo que los sigma-delta anteriores, pero pueden ser suficientes para aplicaciones menos exigentes.
+\end{itemize}
+
+En general, para sensores de gases traza donde las variaciones de señal son muy pequeñas, conviene priorizar ADC de sigma-delta con alta resolución y filtrado digital, incluso si su velocidad es menor, ya que los sensores Alphasense tienen respuesta en escala de segundos.
+
+Referencias específicas: Alphasense recomienda un diseño de electrónica de bajo ruido para alcanzar resoluciones de 15 ppb\textsuperscript{25, 2}. Por ello, combinar un buen regulador LDO (como los anteriores) - que asegure una alimentación de 5V limpia y estable para la placa ISB junto con un ADC de alta resolución ($16+$ bits) por I²C/SPI, permitirá explotar al máximo la precisión de estos sensores. En la práctica, desarrollos como la placa Smart Citizen ASB utilizan dos ADS1115 de 16-bit para leer hasta 8 canales analógicos Alphasense\textsuperscript{16, 17}, demostrando la viabilidad de estas soluciones con componentes disponibles en el mercado.
+
+Cada componente mencionado incluye documentación detallada del fabricante y suele estar disponible en plataformas como AliExpress, eBay o distribuidores (a veces como módulos listos para usar), facilitando su integración en un diseño personalizado.
+
+\section*{Referencias}
+
+\begin{itemize}
+    \item \href{https://www.isweek.com/product/individual-sensor-board-isb-alphasense-b4-4-electrode-gas-sensors-isb_51.html}{1 2 13 14 Individual Sensor Board (ISB) Alphasense B4 4-Electrode Gas Sensors - ISB}
+    \item \href{https://ww1.microchip.com/downloads/aemDocuments/documents/APID/ProductDocuments/DataSheets/MCP1754-and-MCP17545-Data-Sheet-DS20002276.pdf}{4 MCP1754/MCP1754S Data Sheet}
+    \item \href{https://www.diodes.com/about/news/press-releases/60v-70db-psrr-Idos-from-diodes-incorporated-deliver-industry-leading-quiescerit-current}{5 6 7 60V, 70dB PSRR LDOs from Diodes Incorporated Deliver Industry-Leading Quiescent Current}
+    \item \href{https://www.st.com/resource/en/datasheet/Ido40l.pdf}{9 Datasheet - LDO40L - 400 mA, 38 V low-dropout regulator, with 45 µA quiescent current}
+    \item \href{https://www.ti.com/lit/gpn/TPS7A47}{10 TPS7A470x 36-V, 1-A, 4-µVRMS, RF LDO Voltage Regulator datasheet (Rev. F)}
+    \item \href{https://www.analog.com/media/en/technical-documentation/data-sheets/3042fb.pdf}{11 [PDF] LT3042-20V, 200mA, Ultralow Noise, Ultrahigh PSRR RF Linear ...}
+    \item \href{https://www.diyaudio.com/community/threads/new-Idovr-com-power-modules-it3045-lt3094-tps7a4700-tps7a3301.381199/}{12 New Idovr.com power modules (LT3045/LT3094/TPS7A4700 ...}
+    \item \href{https://www.adafruit.com/product/1085?srsltid=AfmBOopx0wbvB1RWUhtVSYuXBsSMYawmOMs_8VuhxXXwaKvWz0Q7wUeQ}{15 ADS1115 16-Bit ADC-4 Channel with Programmable Gain Amplifier [STEMMA QT/Qwiic]: ID 1085: Adafruit Industries, Unique \& fun DIY electronics and kits}
+    \item \href{https://docs.smartcitizen.me/hardware/boards/analog-sensor-board/}{16: 17 Analog Sensor Board - Smart Citizen Docs}
+    \item \href{https://www.ti.com/lit/ds/symlink/ads1115.pdf}{18 19 ADS111x Ultra-Small, Low-Power, I2 C-Compatible, 860SPS, 16-Bit ADCs with Internal Reference, Oscillator, and Programmable Comparator datasheet (Rev. E)}
+    \item \href{https://www.dfrobot.com/product-1182.html?srsltid=AfmBOoqQvFr-aAvIAWsH3YGbETrjZec9XZqxHzjl9ZRzbmjEL9ZKml76}{20 21 Fermion: MCP3424 18-Bit ADC-4 Channel with Programmable Gain Amplifier - DFRobot}
+    \item \href{https://www.amazon.com/Channel-ADS1256-Acquisition-Collecting-Precision/dp/B0DBSWRQZS}{22 23 24 24 Bit 8 Channel ADS1256 ADC Data Acquisition Board Module AD Collecting Data Acquisition Card High Precision: Amazon.com: Industrial \& Scientific}
+    \item \href{https://www.isweek.com/Uploads/20161216/5853470876f70.pdf}{25 TDS OX-B431 Apr 16.pmd}
+\end{itemize}
+
+\end{document}
